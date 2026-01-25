@@ -149,14 +149,17 @@ credify-ai/
 │   ├── preprocess.py           # Data ingestion & cleaning
 │   ├── features.py              # Feature engineering
 │   ├── train_model.py           # Model training pipeline
-│   └── evaluate.py              # Evaluation metrics & analysis
+│   ├── evaluate.py              # Evaluation metrics & analysis
+│   └── explainability.py        # SHAP-based model explanations
 ├── scripts/
 │   ├── verify_preprocessing.py
 │   ├── verify_features.py
-│   └── verify_train_model.py
+│   ├── verify_train_model.py
+│   └── verify_explainability.py
 ├── data/
 │   ├── raw/                     # ignored by git
 │   └── processed/               # ignored by git
+├── visuals/                     # SHAP plots and visualizations
 ├── notebooks/
 ├── requirements.txt
 ├── README.md
@@ -170,27 +173,64 @@ credify-ai/
 - **Language:** Python 3.8+
 - **Data Processing:** Pandas, NumPy
 - **Machine Learning:** Scikit-learn, XGBoost
+- **Explainability:** SHAP
+- **Visualization:** Matplotlib, Seaborn
 - **Evaluation:** Scikit-learn metrics
 - **Workflow:** Modular ML pipeline with verification scripts
 
 ---
 
+## ✅ Phase 4: Model Explainability (Completed)
+
+To ensure trust and interpretability, CredifyAI uses SHAP (SHapley Additive exPlanations) for model explanations.
+
+### Explainability Approach
+
+- Uses a **High Risk vs Rest (One-vs-Rest)** binary model
+- Explains **predicted probability of High Risk**
+- Avoids known SHAP–XGBoost multiclass limitations
+- Produces stable, regulator-friendly explanations
+
+### Outputs
+
+- Global SHAP feature importance plot
+- Highlights dominant drivers of high-risk predictions
+- Visual explanations saved under `visuals/`
+
+### Why This Matters
+
+This phase validates that the model learns **financially meaningful patterns**, not spurious correlations. The explainability outputs ensure:
+
+- Regulatory compliance and audit readiness
+- Stakeholder trust in model decisions
+- Identification of key risk drivers
+- Validation of domain knowledge alignment
+
+### Verification
+
+Run the explainability verification script:
+```bash
+python scripts/verify_explainability.py
+```
+
+This script:
+
+- Trains a binary High Risk classifier
+- Generates SHAP values for feature attribution
+- Creates and saves global feature importance plots
+- Validates that top features align with financial logic
+
+---
+
 ## 🚧 Upcoming Phases
 
-### Phase 4: Model Explainability (Next)
-
-- SHAP (SHapley Additive exPlanations) integration
-- Feature attribution analysis
-- Risk reasoning validation
-- Verification of financial logic learned by the model
-- Individual prediction explanations
-
-### Phase 5: Deployment Pipeline (Future)
+### Phase 5: Deployment Pipeline (Next)
 
 - Model serialization and versioning
 - REST API for real-time scoring
 - Batch prediction pipeline
 - Model monitoring and drift detection
+- A/B testing framework
 
 ---
 
@@ -213,6 +253,9 @@ python scripts/verify_features.py
 
 # Step 3: Train and evaluate model
 python scripts/verify_train_model.py
+
+# Step 4: Generate SHAP explanations
+python scripts/verify_explainability.py
 ```
 
 ---
@@ -241,4 +284,4 @@ This project is available for educational and portfolio purposes.
 
 ---
 
-**Current Status:** Phase 3 Complete ✅ | Next: Model Explainability with SHAP
+**Current Status:** Phase 4 Complete ✅ | Next: Deployment Pipeline

@@ -1,2 +1,14 @@
-pandas>=2.0
-numpy>=1.24
+# Core data handling
+numpy
+pandas
+
+# Machine learning
+scikit-learn
+xgboost
+
+# Explainability
+shap
+
+# Visualization (used by SHAP)
+matplotlib
+seaborn
