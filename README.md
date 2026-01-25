@@ -106,18 +106,57 @@ This script validates:
 
 ---
 
+## ✅ Phase 3: Model Training & Evaluation (Completed)
+
+This phase implements a production-grade classification model with robust evaluation metrics.
+
+### Model Architecture
+
+- **Algorithm:** XGBoost (multiclass classification)
+- **Imbalance Handling:** Class-weighted loss function
+- **Data Split:** Stratified train/validation split
+- **Optimization:** Grid search for hyperparameter tuning (optional)
+
+### Evaluation Metrics
+
+- **Primary Focus:** Recall for High and Moderate risk classes (minimize false negatives)
+- **Secondary Metrics:** Precision, F1-score for balanced assessment
+- **Error Analysis:** Confusion matrix for misclassification patterns
+- **Class-wise Performance:** Per-class precision, recall, and F1-score
+
+### Verification
+
+Run the model training verification script:
+```bash
+python scripts/verify_train_model.py
+```
+
+This script:
+
+- Trains the XGBoost model with class weighting
+- Performs stratified train/validation split
+- Evaluates using precision, recall, and F1-score
+- Generates confusion matrix for error analysis
+- Outputs classification report with per-class metrics
+
+---
+
 ## 🗂️ Project Structure
+
 ```
 credify-ai/
 ├── src/
-│   ├── preprocess.py          # Data ingestion & cleaning
-│   └── features.py             # Feature engineering
+│   ├── preprocess.py           # Data ingestion & cleaning
+│   ├── features.py              # Feature engineering
+│   ├── train_model.py           # Model training pipeline
+│   └── evaluate.py              # Evaluation metrics & analysis
 ├── scripts/
 │   ├── verify_preprocessing.py
-│   └── verify_features.py
+│   ├── verify_features.py
+│   └── verify_train_model.py
 ├── data/
-│   ├── raw/                    # ignored by git
-│   └── processed/              # ignored by git
+│   ├── raw/                     # ignored by git
+│   └── processed/               # ignored by git
 ├── notebooks/
 ├── requirements.txt
 ├── README.md
@@ -126,21 +165,55 @@ credify-ai/
 
 ---
 
-## 🛠️ Tech Stack (Current Phases)
+## 🛠️ Tech Stack
 
-- **Language:** Python
+- **Language:** Python 3.8+
 - **Data Processing:** Pandas, NumPy
-- **Workflow:** Modular pipeline with verification scripts
+- **Machine Learning:** Scikit-learn, XGBoost
+- **Evaluation:** Scikit-learn metrics
+- **Workflow:** Modular ML pipeline with verification scripts
 
 ---
 
 ## 🚧 Upcoming Phases
 
-- Model training with XGBoost
-- Handling class imbalance
-- Model evaluation using recall, precision, and F1-score
-- Explainability using SHAP
-- Deployment-ready scoring pipeline
+### Phase 4: Model Explainability (Next)
+
+- SHAP (SHapley Additive exPlanations) integration
+- Feature attribution analysis
+- Risk reasoning validation
+- Verification of financial logic learned by the model
+- Individual prediction explanations
+
+### Phase 5: Deployment Pipeline (Future)
+
+- Model serialization and versioning
+- REST API for real-time scoring
+- Batch prediction pipeline
+- Model monitoring and drift detection
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run Complete Pipeline
+
+```bash
+# Step 1: Preprocess raw data
+python scripts/verify_preprocessing.py
+
+# Step 2: Engineer features
+python scripts/verify_features.py
+
+# Step 3: Train and evaluate model
+python scripts/verify_train_model.py
+```
 
 ---
 
@@ -153,4 +226,19 @@ GitHub: [https://github.com/01mayankk](https://github.com/01mayankk)
 
 ## 📌 Project Philosophy
 
-Each phase is completed, verified, and committed independently to ensure reproducibility, interpretability, and long-term maintainability.
+Each phase is completed, verified, and committed independently to ensure:
+
+- **Reproducibility:** Clear verification scripts for every stage
+- **Interpretability:** Financial domain alignment in features and evaluation
+- **Maintainability:** Modular codebase with separation of concerns
+- **Production-readiness:** Industry-standard practices from day one
+
+---
+
+## 📄 License
+
+This project is available for educational and portfolio purposes.
+
+---
+
+**Current Status:** Phase 3 Complete ✅ | Next: Model Explainability with SHAP
