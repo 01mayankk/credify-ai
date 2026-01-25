@@ -35,7 +35,7 @@ To classify loan applicants into **Low**, **Moderate**, or **High** credit risk 
 ---
 
 ## 🗂️ Project Structure
-
+```
 credify-ai/
 ├── src/
 │ └── preprocess.py
@@ -48,7 +48,7 @@ credify-ai/
 ├── README.md
 └── .gitignore
 
-
+```
 ---
 
 ## ▶️ How to Verify Preprocessing
