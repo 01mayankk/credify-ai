@@ -14,7 +14,7 @@ No training logic exists here.
 from pathlib import Path
 import numpy as np
 import pandas as pd
-
+from src.risk_reasons import generate_risk_reasons
 from src.model_io import load_model
 
 
@@ -63,37 +63,41 @@ def prepare_input(features: dict, feature_names: list) -> pd.DataFrame:
     ordered_values = {f: features[f] for f in feature_names}
     return pd.DataFrame([ordered_values])
 
-
 def predict_risk(
-    features: dict,
-    threshold: float = DEFAULT_THRESHOLD
+    features: dict
 ):
     """
-    Predict high-risk probability and label for a borrower.
+    Predict credit risk with industry-grade interpretation.
 
-    Parameters
-    ----------
-    features : dict
-        Borrower feature inputs.
-    threshold : float
-        Probability threshold for High Risk classification.
-
-    Returns
-    -------
-    dict
-        Prediction result containing probability and risk label.
+    Returns:
+    - probability of High Risk
+    - risk band (Low / Medium / High)
+    - decision guidance
     """
 
     model, feature_names = load_inference_model()
     X_input = prepare_input(features, feature_names)
 
-    # Predict probability of High Risk (class index 1)
     prob_high_risk = model.predict_proba(X_input)[0, 1]
 
-    risk_label = "High Risk" if prob_high_risk >= threshold else "Not High Risk"
+    # -----------------------------
+    # Risk Band Policy Layer
+    # -----------------------------
+    if prob_high_risk < 0.05:
+        risk_band = "Low Risk"
+        decision = "Eligible for approval"
+    elif prob_high_risk < 0.15:
+        risk_band = "Medium Risk (Watchlist)"
+        decision = "Requires manual review"
+    else:
+        risk_band = "High Risk"
+        decision = "High likelihood of default"
+
+    reasons = generate_risk_reasons(features)
 
     return {
-        "risk_label": risk_label,
         "probability_high_risk": round(float(prob_high_risk), 4),
-        "threshold_used": threshold
+        "risk_band": risk_band,
+        "decision": decision,
+        "key_reasons": reasons
     }
