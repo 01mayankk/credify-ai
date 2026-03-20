@@ -30,7 +30,14 @@ document.querySelectorAll('.hero-slider').forEach(slider => {
     setSliderGradient(slider);
 });
 
-// Form submission handler
+// ============================================
+// API Configuration
+// ============================================
+const API_URL = 'https://01mayankk-credify-ai.hf.space';
+
+// ============================================
+// Form Submission Handler
+// ============================================
 let currentRiskProb = 0;
 
 document.getElementById('prediction-form').addEventListener('submit', async (e) => {
@@ -55,7 +62,7 @@ document.getElementById('prediction-form').addEventListener('submit', async (e) 
     };
 
     try {
-        const response = await fetch('/predict', {
+        const response = await fetch(API_URL + '/predict', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
