@@ -49,8 +49,13 @@ Traditional credit scoring systems often rely on:
 ## 🏗️ Project Architecture
 
 ```
-credify-ai/
-├── app.py                    # Streamlit dashboard (UI)
+├── api/                      # FastAPI Backend
+│   └── main.py               # API endpoints
+├── static/                   # Frontend assets
+│   ├── index.html            # Web Application UI
+│   ├── styles.css            # Dark Mode CSS
+│   └── script.js             # API Integration
+├── Dockerfile                # Docker deployment config
 ├── src/
 │   ├── preprocess.py         # Data cleaning & validation
 │   ├── features.py           # Feature engineering (6 core features)
@@ -234,23 +239,36 @@ python scripts/test_inference.py
 
 ## ✅ Phase 6: Interactive Dashboard (Completed)
 
-### 🖥️ Streamlit Dashboard
+### 🖥️ Modern Web Application
 
-CredifyAI includes a **Streamlit dashboard** for real-time inference.
+CredifyAI features a **Vanilla HTML/CSS/JS frontend powered by a FastAPI backend**.
+Streamlit has been entirely replaced by a highly aesthetic, custom web interface.
 
 ### Features
 
-- Manual borrower input via user-friendly form
-- Instant risk prediction
-- Probability-based output (not binary)
-- Clean, audit-friendly UI
-- SHAP summary visualization
+- Glassmorphic dark mode design
+- Real-time risk prediction by fetching the REST API
+- Interactive API without page reloads
+- Probability-based output seamlessly rendered
 
 ### Run Locally
 
+Start the backend:
 ```bash
-streamlit run app.py
+uvicorn api.main:app --host 127.0.0.1 --port 8000
 ```
+Open `http://localhost:8000` in your browser.
+
+### 🌍 Deployment on Hugging Face Spaces
+
+CredifyAI is fully containerized and easily deployable as a **Docker Space** on Hugging Face.
+
+1. Create a new Space on [Hugging Face](https://huggingface.co/new-space).
+2. Select **Docker** as the Space SDK.
+3. Push this repository's contents to the space.
+4. The provided `Dockerfile` will automatically install requirements, set up the container, and launch the FastAPI server on port `7860`.
+
+Your robust API and modern UI will be instantly live!
 
 ### ⚠️ Important Design Note (Intentional)
 
@@ -273,7 +291,8 @@ It returns a **risk probability**, allowing downstream systems to:
 - **Machine Learning:** Scikit-learn, XGBoost
 - **Explainability:** SHAP
 - **Visualization:** Matplotlib, Seaborn
-- **Dashboard:** Streamlit
+- **Dashboard:** Custom Web Application (Vanilla HTML/CSS/JS)
+- **API Backend:** FastAPI
 - **Model Persistence:** Joblib
 - **Workflow:** Modular ML pipeline with verification scripts
 
@@ -308,8 +327,9 @@ python scripts/save_model.py
 # Step 6: Test inference pipeline
 python scripts/test_inference.py
 
-# Step 7: Launch interactive dashboard
-streamlit run app.py
+# Step 7: Launch API Server & UI
+uvicorn api.main:app --host 127.0.0.1 --port 8000
+# Then visit http://localhost:8000
 ```
 
 ---
@@ -323,8 +343,8 @@ This project demonstrates:
 - Class imbalance handling
 - Explainable ML (SHAP)
 - Model persistence & inference
-- ML dashboards using Streamlit
-- Production-style project structure
+- REST API Design with FastAPI
+- Aesthetic Custom Web Dashboards without heavyweight frameworks
 - Separation of model logic and business rules
 
 ---

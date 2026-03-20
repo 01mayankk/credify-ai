@@ -12,3 +12,7 @@ shap
 # Visualization (used by SHAP)
 matplotlib
 seaborn
+
+# API and Web Server
+fastapi
+uvicorn

@@ -14,7 +14,7 @@ No training logic exists here.
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from src.risk_reasons import generate_risk_reasons
+from src.risk_reasons import generate_risk_reasons, generate_insights, generate_simulations
 from src.model_io import load_model
 
 
@@ -94,10 +94,14 @@ def predict_risk(
         decision = "High likelihood of default"
 
     reasons = generate_risk_reasons(features)
+    insights = generate_insights(features, prob_high_risk)
+    simulations = generate_simulations(features, prob_high_risk, risk_band)
 
     return {
         "probability_high_risk": round(float(prob_high_risk), 4),
         "risk_band": risk_band,
         "decision": decision,
-        "key_reasons": reasons
+        "key_reasons": reasons,
+        "insights": insights,
+        "simulations": simulations
     }
