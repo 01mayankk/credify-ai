@@ -1,0 +1,13 @@
+models/
+notebooks/
+data/
+scripts/
+src/
+api/
+requirements.txt
+Dockerfile
+.venv
+venv
+__pycache__
+*.joblib
+*.csv
